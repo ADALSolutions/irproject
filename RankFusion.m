@@ -1,8 +1,7 @@
 warning('off','all')
-addpath('C:\Users\DavideDP\AnacondaProjects\Project\RankFusion\core\io')
-addpath('C:\Users\DavideDP\AnacondaProjects\Project\RankFusion\core\measure')
-addpath('C:\Users\DavideDP\AnacondaProjects\Project\RankFusion\core\util')
-addpath('C:\Users\DavideDP\AnacondaProjects\Project\RankFusion')
+addpath('core\io')
+addpath('core\measure')
+addpath('core\util')
 
 %path_to_pool, path_run,name_run
 
@@ -24,9 +23,9 @@ addpath('C:\Users\DavideDP\AnacondaProjects\Project\RankFusion')
 measuredRunSet =  averagePrecision(pool, runSet);
 
 sum=0
-for k = 351:400
+for k = 352:2:400
    sum=sum+measuredRunSet{int2str(k),1}
 end
-sum=sum/50
+sum=sum/25
 
 

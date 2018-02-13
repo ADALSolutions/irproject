@@ -16,11 +16,12 @@ import shutil
 
 import codecs
 
+
 # In[ ]:
 
+
 import matlab.engine
-eng = matlab.engine.start_matlab()
-path_to_pool = "C:\\Users\\DavideDP\\AnacondaProjects\\Project\\terrier-core-4.2\\share\\TIPSTER\\pool\\qrels.trec7.txt"     
+eng = matlab.engine.start_matlab()    
 
 
 # # [Lee95]: Combining Multiple Evidence from Different Properties of Weighting Schemes
@@ -53,7 +54,7 @@ def normalize_score_all (filename_list, path, dir_in, dir_out):
 # In[4]:
 
 
-def comb_sum (filename_list, path, dir_in, dir_out):
+def comb_sum (filename_list, path, dir_in, dir_out,nome_file="comb_sum.txt"):
     comb_sum = {}   
     for filename_in in filename_list:
         path_in = path + "\\" + dir_in + "\\" + filename_in
@@ -69,7 +70,7 @@ def comb_sum (filename_list, path, dir_in, dir_out):
     comb_sum = sorted(comb_sum.items(), key = lambda (k, v) : (v, k), reverse = True)
     comb_sum = np.asarray([list(k) + [v] for k, v in comb_sum])
     
-    path_out = path + "\\" + dir_out + "\\" + "comb_sum.txt"
+    path_out = path + "\\" + dir_out + "\\" + nome_file
     df = pd.DataFrame(data = comb_sum, columns = ['topicID', 'docID', 'score'])
     df = df.sort_values(['topicID', 'score'], ascending=[True, False])
     df['Rank'] = df.groupby('topicID')['score'].rank(ascending = False).astype('int64') - 1
@@ -82,7 +83,7 @@ def comb_sum (filename_list, path, dir_in, dir_out):
 # In[5]:
 
 
-def comb_max (filename_list, path, dir_in, dir_out):
+def comb_max (filename_list, path, dir_in, dir_out, nome_file="comb_max.txt"):
     comb_max = {}   
     for filename_in in filename_list:
         path_in = path + "\\" + dir_in + "\\" + filename_in
@@ -99,7 +100,7 @@ def comb_max (filename_list, path, dir_in, dir_out):
     comb_max = sorted(comb_max.items(), key = lambda (k, v) : (v, k), reverse = True)
     comb_max = np.asarray([list(k) + [v] for k, v in comb_max])
     
-    path_out = path + "\\" + dir_out + "\\" + "comb_max.txt"
+    path_out = path + "\\" + dir_out + "\\" + nome_file
     df = pd.DataFrame(data = comb_max, columns = ['topicID', 'docID', 'score'])
     df = df.sort_values(['topicID', 'score'], ascending=[True, False])
     df['Rank'] = df.groupby('topicID')['score'].rank(ascending = False).astype('int64') - 1
@@ -112,7 +113,7 @@ def comb_max (filename_list, path, dir_in, dir_out):
 # In[6]:
 
 
-def comb_min (filename_list, path, dir_in, dir_out):
+def comb_min (filename_list, path, dir_in, dir_out, nome_file="comb_min.txt"):
     comb_min = {}   
     for filename_in in filename_list:
         path_in = path + "\\" + dir_in + "\\" + filename_in
@@ -129,7 +130,7 @@ def comb_min (filename_list, path, dir_in, dir_out):
     comb_min = sorted(comb_min.items(), key = lambda (k, v) : (v, k), reverse = True)
     comb_min = np.asarray([list(k) + [v] for k, v in comb_min])
     
-    path_out = path + "\\" + dir_out + "\\" + "comb_min.txt"
+    path_out = path + "\\" + dir_out + "\\" + nome_file
     df = pd.DataFrame(data = comb_min, columns = ['topicID', 'docID', 'score'])
     df = df.sort_values(['topicID', 'score'], ascending=[True, False])
     df['Rank'] = df.groupby('topicID')['score'].rank(ascending = False).astype('int64') - 1
@@ -142,7 +143,7 @@ def comb_min (filename_list, path, dir_in, dir_out):
 # In[7]:
 
 
-def comb_median (filename_list, path, dir_in, dir_out):
+def comb_median (filename_list, path, dir_in, dir_out, nome_file="comb_median.txt"):
     comb_median = {}   
     for filename_in in filename_list:
         path_in = path + "\\" + dir_in + "\\" + filename_in
@@ -161,7 +162,7 @@ def comb_median (filename_list, path, dir_in, dir_out):
     comb_median = sorted(comb_median.items(), key = lambda (k, v) : (v, k), reverse = True)
     comb_median = np.asarray([list(k) + [v] for k, v in comb_median])
     
-    path_out = path + "\\" + dir_out + "\\" + "comb_median.txt"
+    path_out = path + "\\" + dir_out + "\\" + nome_file
     df = pd.DataFrame(data = comb_median, columns = ['topicID', 'docID', 'score'])
     df = df.sort_values(['topicID', 'score'], ascending=[True, False])
     df['Rank'] = df.groupby('topicID')['score'].rank(ascending = False).astype('int64') - 1
@@ -174,7 +175,7 @@ def comb_median (filename_list, path, dir_in, dir_out):
 # In[8]:
 
 
-def comb_mnz (filename_list, path, dir_in, dir_out):
+def comb_mnz (filename_list, path, dir_in, dir_out, nome_file="comb_mnz.txt"):
    comb_mnz = {}   
    for filename_in in filename_list:
        path_in = path + "\\" + dir_in + "\\" + filename_in
@@ -193,7 +194,7 @@ def comb_mnz (filename_list, path, dir_in, dir_out):
    comb_mnz = sorted(comb_mnz.items(), key = lambda (k ,v) : (v, k), reverse = True)
    comb_mnz = np.asarray([list(k[0]) + [k[1]] for k in comb_mnz])
    
-   path_out = path + "\\" + dir_out + "\\" + "comb_mnz.txt"
+   path_out = path + "\\" + dir_out + "\\" + nome_file
    df = pd.DataFrame(data = comb_mnz, columns = ['topicID', 'docID', 'score'])
    df = df.sort_values(['topicID', 'score'], ascending=[True, False])
    df['Rank'] = df.groupby('topicID')['score'].rank(ascending = False).astype('int64') - 1
@@ -206,7 +207,7 @@ def comb_mnz (filename_list, path, dir_in, dir_out):
 # In[9]:
 
 
-def comb_anz (filename_list, path, dir_in, dir_out):
+def comb_anz (filename_list, path, dir_in, dir_out, nome_file="comb_anz.txt"):
     comb_anz = {}   
     for filename_in in filename_list:
         path_in = path + "\\" + dir_in + "\\" + filename_in
@@ -225,7 +226,7 @@ def comb_anz (filename_list, path, dir_in, dir_out):
     comb_anz = sorted(comb_anz.items(), key = lambda (k, v) : (v, k), reverse = True)
     comb_anz = np.asarray([ list(k[0]) + [k[1]] for k in comb_anz])
     
-    path_out = path + "\\" + dir_out + "\\" + "comb_anz.txt"
+    path_out = path + "\\" + dir_out + "\\" + nome_file
     df = pd.DataFrame(data = comb_anz, columns = ['topicID', 'docID', 'score'])
     df = df.sort_values(['topicID', 'score'], ascending=[True, False])
     df['Rank'] = df.groupby('topicID')['score'].rank(ascending = False).astype('int64') - 1
@@ -262,7 +263,7 @@ def algorithm1(k1, k2):
 # In[11]:
 
 
-def condorcet_alg (filename_list, path, dir_in, dir_out):
+def condorcet_alg (filename_list, path, dir_in, dir_out, nome_file="condorcet.txt"):
     global condorcet
     global filename_list_global
     condorcet = {}  
@@ -299,7 +300,7 @@ def condorcet_alg (filename_list, path, dir_in, dir_out):
             Matrix.append(i)
     Matrix=np.asarray(Matrix) 
         
-    path_out = path + "\\" + dir_out + "\\" + "condorcet.txt"
+    path_out = path + "\\" + dir_out + "\\" + nome_file
     df = pd.DataFrame(data = Matrix, columns = ['topicID', 'docID', 'rank'])
     df['rank'] = df['rank'].astype('int64')
     df['score'] = df['rank'].max() - df['rank']  #1. / (df['rank'].astype('int64') + 1)
@@ -332,10 +333,10 @@ def algorithm1_weighted(k1, k2):
     return -1
 
 
-# In[13]:
+# In[1]:
 
 
-def condorcet_weighted (filename_list, path, dir_in, dir_out, dir_w,nome_file="condorcetWeighted.txt"):
+def condorcet_weighted (filename_list, path, dir_in, dir_out, dir_w="weights",nome_file="condorcetWeighted.txt"):
     global w
     w = findWeights(path, dir_in, dir_w)
     global condorcet
@@ -383,6 +384,11 @@ def condorcet_weighted (filename_list, path, dir_in, dir_out, dir_w,nome_file="c
     df['model'] = nome_file
     df = df.reindex(columns = ['topicID', 'Q0', 'docID', 'rank', 'score', 'model'])
     df.to_csv(path_out, index = False, header = False, sep = " ") 
+    
+def condorcet_weightedML (filename_list, path, dir_in, dir_out, dir_w="weightsML",nome_file="condorcetWeightedML.txt"):
+    condorcet_weighted (filename_list, path, dir_in, dir_out, dir_w,nome_file)
+def condorcet_weightedLog (filename_list, path, dir_in, dir_out, dir_w="weightsLog",nome_file="condorcetWeightedLog.txt"):
+    condorcet_weighted (filename_list, path, dir_in, dir_out, dir_w,nome_file)    
 
 
 # # Utilities
@@ -412,11 +418,13 @@ def findWeights(path, directory, directory_weights,exist=True):
         weights[filename]=map_value
     return weights
 
-def take_MAP_TrecEval(path,directory, directory_weights,filename,exist=False):
+def take_MAP_TrecEval(path,directory, directory_weights,filename,exist=False,path_terrier=None):
+    if(path_terrier==None):
+        path_terrier=path
     if(not exist):
         process = "{}trec_eval {} {}"
-        path_to_bin = "C:\\Users\\DavideDP\\AnacondaProjects\\Project\\terrier-core-4.2\\bin\\"
-        path_to_pool = "C:\\Users\\DavideDP\\AnacondaProjects\\Project\\terrier-core-4.2\\share\\TIPSTER\\pool\\qrels.trec7.txt"
+        path_to_bin = path_terrier+"\\"+"terrier-core-4.2\\bin\\"
+        path_to_pool = path_terrier+"\\"+"terrier-core-4.2\\share\\TIPSTER\\pool\\qrels.trec7.txt"
         path_to_run = path + "\\" + directory + "\\" + str(filename)
         process=str(process.format(path_to_bin, path_to_pool, path_to_run))
         #print("take MAP \n "+process)
@@ -433,10 +441,13 @@ def take_MAP_TrecEval(path,directory, directory_weights,filename,exist=False):
     lines=p.split("\n")        
     return float(lines[6].split()[2])
 
-def take_MAP(path,directory, directory_weights,filename,exist=False):
+def take_MAP(path,directory, directory_weights,filename,exist=False,path_terrier=None):
+    if(path_terrier==None):
+        path_terrier=path    
     if(not exist):
         eng.addpath("r"+path, nargout=0)
         path_to_run = path + "\\" + directory + "\\" + str(filename)
+        path_to_pool = path_terrier+"\\"+"terrier-core-4.2\\share\\TIPSTER\\pool\\qrels.trec7.txt"
         name_run=filename
         eng.workspace['path_to_pool']=path_to_pool
         eng.workspace['path_to_run']=path_to_run
@@ -461,7 +472,7 @@ def take_MAP(path,directory, directory_weights,filename,exist=False):
 
 def main():
     # Could use Empty Line below if dirs are in the same python's working dir
-    path = "C:\\Users\\DavideDP\\AnacondaProjects\\Project\\RankFusion" 
+    path = os.getcwd()
     
     dir_in = "input"   
     #filename_list = listFiles(path, dir_in)
@@ -477,21 +488,28 @@ def main():
     #If we want execute only some of the algorithm
     #we can comment line of manageDirectory and all the call to function of algorthims that we don't want
     dir_comb = "comb"
-    manageDirectory(path, dir_comb)
-    comb_sum(filename_list, path, dir_norm, dir_comb)
-    print "CombSum terminated without errors"
-    comb_max(filename_list, path, dir_norm, dir_comb)
-    print "CombMax terminated without errors"
-    comb_min(filename_list, path, dir_norm, dir_comb)
-    print "CombMin terminated without errors"
-    comb_median(filename_list, path, dir_norm, dir_comb)
-    print "CombMedian terminated without errors"
-    comb_mnz(filename_list, path, dir_norm, dir_comb)
-    print "CombMnz terminated without errors"
-    comb_anz(filename_list, path, dir_norm, dir_comb)
-    print "CombAnz terminated without errors"
-    condorcet_alg(filename_list, path, dir_norm, dir_comb)
-    print "Condorcet terminated without errors"
-    condorcet_weighted(filename_list, path, dir_norm, dir_comb, dir_w)
-    print "Condorcet Weighted terminated without errors"
+    #manageDirectory(path, dir_comb)
+	
+    #comb_sum(filename_list, path, dir_norm, dir_comb)
+    #print "CombSum terminated without errors"
+    #comb_max(filename_list, path, dir_norm, dir_comb)
+    #print "CombMax terminated without errors"
+    #comb_min(filename_list, path, dir_norm, dir_comb)
+    #print "CombMin terminated without errors"
+    #comb_median(filename_list, path, dir_norm, dir_comb)
+    #print "CombMedian terminated without errors"
+    #comb_mnz(filename_list, path, dir_norm, dir_comb)
+    #print "CombMnz terminated without errors"
+    #comb_anz(filename_list, path, dir_norm, dir_comb)
+    #print "CombAnz terminated without errors"
+    #condorcet_alg(filename_list, path, dir_norm, dir_comb)
+    #print "Condorcet terminated without errors"
+    #condorcet_weighted(filename_list, path, dir_norm, dir_comb, dir_w)
+    #print "Condorcet Weighted terminated without errors"	
+    condorcet_weightedML(filename_list, path, dir_norm, dir_comb)
+    print "Condorcet WeightedML terminated without errors"
+    condorcet_weightedLog(filename_list, path, dir_norm, dir_comb)
+    print "Condorcet WeightedLog terminated without errors"		
+
+
 
